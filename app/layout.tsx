@@ -1,19 +1,24 @@
-import './globals.css'
-
+"use client";
+import { SessionProvider } from "next-auth/react";
+import "./globals.css";
 
 export const metadata = {
-  title: 'WORKOUTTODO',
-  description: 'This a TODO Workout website',
-}
+  title: "WORKOUTTODO",
+  description: "This a TODO Workout website",
+};
 
 export default function RootLayout({
   children,
+  session
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
+  session: any
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="min-h-full">
+        <SessionProvider session={session}>{children}</SessionProvider>
+      </body>
     </html>
-  )
+  );
 }
