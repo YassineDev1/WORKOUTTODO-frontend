@@ -13,25 +13,22 @@ const SignIn = () => {
       email: email,
       password: password,
       redirect: true,
-      callbackUrl: "/",
+      callbackUrl: "/dashboard",
     });
 
-  }, [email, password]);
+  }, [email, password ])
   return (
-    <div className="relative grid w-full h-screen grid-cols-1 sm:grid-cols-2">
-      <div className="relative hidden sm:block">
-        <div className="">
-          <Image
-            className="object-cover"
-            fill
+    <div className="grid w-full h-screen grid-cols-1 sm:grid-cols-2">
+      <div className="hidden sm:block">
+          <img
+            className="object-cover w-full h-full"
+            loading="lazy"
             src="/images/background.jpg"
             alt=""
           />
-        </div>
       </div>
-
-      <div className="flex flex-col justify-center bg-gray-100">
-        <div className="max-w-[400px] w-full mx-auto bg-white p-4">
+      <div className="flex flex-col justify-center px-6 bg-gray-100 md:px-2 ">
+        <div className="max-w-[400px] w-full mx-auto bg-white p-8 md:p-4">
           <h2 className="py-6 text-4xl font-bold text-center">
             <span className="text-red-700">WORK</span>
             <span>OUT</span>
