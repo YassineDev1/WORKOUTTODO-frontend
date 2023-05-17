@@ -70,7 +70,7 @@ const SignIn = () => {
               />
               <label htmlFor="remember">Remember Me</label>
             </p>
-            <Link href="/signup">Create an account</Link>
+            <Link href="/auth/signup">Create an account</Link>
           </div>
         </div>
       </div>
