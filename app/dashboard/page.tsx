@@ -7,15 +7,13 @@ import { useSession } from "next-auth/react";
 import { Workout, WorkoutType } from "../types/Workout";
 import Workouts from "../components/Workout/Workouts";
 
-
 const Dashboard = () => {
   const { data: session } = useSession();
   const [workouts, setWorkouts] = useState<Workout[]>([]);
 
-  const fetchWorkouts =useCallback(async () => {
+  const fetchWorkouts = useCallback(async () => {
     try {
-      const token = session?.user?.accessToken
-      console.log(token);
+      const token = session?.user?.accessToken;
 
       const response = await axios.get("http://127.0.0.1:5000/api/workouts", {
         headers: {
@@ -30,7 +28,7 @@ const Dashboard = () => {
     } catch (error) {
       console.error("Error fetching workouts:", error);
     }
-  },[session]);
+  }, [session]);
   useEffect(() => {
     fetchWorkouts();
   }, [session, fetchWorkouts]);
@@ -59,9 +57,8 @@ const Dashboard = () => {
     }
   };
 
-
   const onDelete = async (id: string) => {
-    const token = session?.user?.accessToken  ?? ""  
+    const token = session?.user?.accessToken ?? "";
     try {
       await axios.delete(`http://127.0.0.1:5000/api/workouts/${id}`, {
         headers: {
@@ -74,7 +71,7 @@ const Dashboard = () => {
     }
   };
 
-  const name:string = session?.user?.data?.name
+  const name: string = session?.user?.data?.name;
 
   return (
     <div className="h-full">

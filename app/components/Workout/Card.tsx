@@ -9,7 +9,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ data, onDelete }) => {
   const handleDelete = () => {
-    onDelete(data._id);    
+    onDelete(data._id);
   };
 
   return (

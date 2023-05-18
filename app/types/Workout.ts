@@ -6,7 +6,7 @@ export interface Workout {
   createdAt: string;
 }
 
-export interface WorkoutType{
+export interface WorkoutType {
   title: string;
   reps: number;
   load: number;

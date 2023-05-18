@@ -3,9 +3,6 @@
 import { useState } from "react";
 import { WorkoutType } from "@/app/types/Workout";
 
-
-
-
 interface AddWorkoutProps {
   handleAddedWorkout: (workout: WorkoutType) => Promise<void>;
 }
@@ -14,7 +11,6 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
   const [title, setTitle] = useState("");
   const [reps, setReps] = useState(0);
   const [load, setLoad] = useState(0);
-
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
