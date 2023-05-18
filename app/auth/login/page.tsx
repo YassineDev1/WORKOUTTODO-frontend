@@ -1,31 +1,56 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const SignIn = () => {
   const [email, setEmail] = useState<String | null>(null);
   const [password, setPassword] = useState<String | null>(null);
+  const [errorMessage, setErrorMessage] = useState<String | null>(null);
+  const router = useRouter();
+
+  const { status } = useSession();
+
+  useEffect(() => {
+    if(status === "authenticated"){
+      router.push('/dashboard')
+    }else{
+      return;
+    }
+  }, [status]);
 
   const onSubmit = useCallback(() => {
-    signIn("credentials", {
-      email: email,
-      password: password,
-      redirect: true,
-      callbackUrl: "/dashboard",
-    });
-
-  }, [email, password ])
+    if (email && password) {
+      setErrorMessage(null);
+      signIn("credentials", {
+        email: email,
+        password: password,
+        redirect: false,
+        callbackUrl: "/dashboard",
+      }).then(({ ok, error }) => {
+        if (ok) {
+          router.push("/dashboard");
+        } else {
+          console.log(error);
+          if (error === "CredentialsSignin") {
+            setErrorMessage("Invalid Email or Password");
+          }
+        }
+      });
+    } else {
+      setErrorMessage("Please enter your email and password.");
+    }
+  }, [email, password]);
   return (
     <div className="grid w-full h-screen grid-cols-1 sm:grid-cols-2">
       <div className="hidden sm:block">
-          <img
-            className="object-cover w-full h-full"
-            loading="lazy"
-            src="/images/background.jpg"
-            alt=""
-          />
+        <img
+          className="object-cover w-full h-full"
+          loading="lazy"
+          src="/images/background.jpg"
+          alt=""
+        />
       </div>
       <div className="flex flex-col justify-center px-6 bg-gray-100 md:px-2 ">
         <div className="max-w-[400px] w-full mx-auto bg-white p-8 md:p-4">
@@ -54,6 +79,9 @@ const SignIn = () => {
               minLength={6}
             />
           </div>
+          {errorMessage && (
+            <div className="text-center text-red-500">{errorMessage}</div>
+          )}
           <button
             onClick={onSubmit}
             className="w-full py-2 my-5 text-white bg-red-500 border hover:bg-red-400"
