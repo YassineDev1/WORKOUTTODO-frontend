@@ -7,26 +7,27 @@ import { useRouter } from "next/navigation";
 
 const SignIn = () => {
   const [response, setResponse] = useState(null);
- 
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-   const router = useRouter();
+  const router = useRouter();
   const onSubmit = async (formData) => {
-    
     try {
       const { data } = await axios.post(
         "http://127.0.0.1:5000/api/users/signup",
         formData
       );
-      if(data){
-        setResponse(data?.message)
-        setTimeout(() => {
+      if (data) {
+        setResponse(data)
+        if(data?.status !== 404){
+           setTimeout(() => {
           router.push("/auth/login");
         }, 2000);
+        }     
       }
     } catch (err) {
       console.log(err);
@@ -49,8 +50,17 @@ const SignIn = () => {
         >
           {response && (
             <div className="block text-center">
-              <p className="font-bold text-green-500">{response}</p>
-            </div>)}
+              <p
+                className={
+                  response?.status !== 404
+                    ? "font-bold text-green-500"
+                    : "font-bold text-red-500"
+                }
+              >
+                {response?.message}
+              </p>
+            </div>
+          )}
           <h2 className="py-6 text-4xl font-bold text-center">Sign Up</h2>
           <div className="flex flex-col py-2">
             <label>name</label>
@@ -58,7 +68,6 @@ const SignIn = () => {
               className="p-2 border"
               type="text"
               placeholder="name"
-              // onChange={(e) => setName(e.target.value)}
               {...register("name", { required: true, minLength: 6 })}
             />
             {errors.name && (
@@ -75,7 +84,6 @@ const SignIn = () => {
               className="p-2 border"
               type="text"
               placeholder="email"
-              // onChange={(e) => setEmail(e.target.value)}
               {...register("email", {
                 required: true,
                 pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -95,7 +103,6 @@ const SignIn = () => {
               className="p-2 border"
               type="password"
               placeholder="password"
-              // onChange={(e) => setPassword(e.target.value)}
               {...register("password", { required: true, minLength: 6 })}
             />
             {errors.password && (
