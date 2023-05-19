@@ -66,11 +66,12 @@ const Edit = () => {
   };
 
   return (
-    <div>
+    <>
+    
       {workout && (
         <EditWorkout workout={workout} handleEditWorkout={handleEdit} />
       )}
-    </div>
+    </>
   );
 };
 

@@ -18,7 +18,7 @@ const Dashboard = () => {
   const router = useRouter();
 
   const token = session?.user?.accessToken;
-  const name: string = session?.user?.data?.name;
+
 
 const fetchWorkouts = useCallback(async () => {
   if (token) {
@@ -106,13 +106,10 @@ useEffect(() => {
   }
 
   return (
-    <div className="h-full">
-      <NavBar name={name} />
-      <div className="flex flex-col-reverse justify-end h-screen gap-10 px-4 py-10 bg-gray-300 md:px-10 lg:px-20 md:flex-row ">
-        <Workouts cards={workouts} onDelete={onDelete} />
-        <AddWorkout handleAddedWorkout={handleAddedWorkout} />
-      </div>
-    </div>
+    <>
+      <Workouts cards={workouts} onDelete={onDelete} />
+      <AddWorkout handleAddedWorkout={handleAddedWorkout} />
+    </>
   );
 };
 
