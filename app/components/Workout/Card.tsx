@@ -13,7 +13,7 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
   };
 
   return (
-    <div className="p-4 mb-4 bg-white rounded-md shadow-md min-w-[350px] md:min-w-[500px] flex justify-between">
+    <div className="flex self-center justify-between w-full p-4 mb-4 bg-white rounded-md shadow-md lg:max-w-5xl">
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-semibold text-green-500 ">{data.title}</h3>
         <div>
@@ -24,7 +24,7 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
             <strong>Reps: </strong> {data.reps}
           </p>
           <p>
-            <strong>created At: </strong> {data.createdAt}
+            <strong>Created At: </strong> {data.createdAt}
           </p>
         </div>
       </div>
