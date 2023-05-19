@@ -11,67 +11,70 @@ const Dashboard = () => {
   const { data: session } = useSession();
   const [workouts, setWorkouts] = useState<Workout[]>([]);
 
+  const token = session?.user?.accessToken;
+  const name: string = session?.user?.data?.name;
   const fetchWorkouts = useCallback(async () => {
-    try {
-      const token = session?.user?.accessToken;
-
-      const response = await axios.get("http://127.0.0.1:5000/api/workouts", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const {
-        data: { workouts },
-      } = response;
-      setWorkouts(workouts);
-    } catch (error) {
-      console.error("Error fetching workouts:", error);
-    }
-  }, [session]);
-  useEffect(() => {
-    fetchWorkouts();
-  }, [session, fetchWorkouts]);
-
-  const handleAddedWorkout = async (workout: WorkoutType) => {
-    const token = session?.user?.accessToken;
-    try {
-      const addedWorkout: Workout = await axios.post(
-        "http://127.0.0.1:5000/workouts",
-        workout,
-        {
+    if (token) {
+      try {
+        const response = await axios.get("http://127.0.0.1:5000/api/workouts", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
-      );
-
-      const {
-        data: { workout: newWorkout },
-      } = addedWorkout;
-
-      setWorkouts((prevWorkouts) => [newWorkout, ...prevWorkouts]);
-      fetchWorkouts();
-    } catch (err) {
-      console.log(err);
+        });
+        const {
+          data: { workouts },
+        } = response;
+        setWorkouts(workouts);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  };
+  }, [token]);
+  useEffect(() => {
+    fetchWorkouts();
+  }, [fetchWorkouts]);
 
-  const onDelete = async (id: string) => {
-    const token = session?.user?.accessToken ?? "";
-    try {
-      await axios.delete(`http://127.0.0.1:5000/api/workouts/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      fetchWorkouts();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const handleAddedWorkout = useCallback(
+    async (workout: WorkoutType) => {
+      try {
+        const addedWorkout: Workout = await axios.post(
+          "http://127.0.0.1:5000/workouts",
+          workout,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-  const name: string = session?.user?.data?.name;
+        const {
+          data: { workout: newWorkout },
+        } = addedWorkout;
+
+        setWorkouts((prevWorkouts) => [newWorkout, ...prevWorkouts]);
+        fetchWorkouts();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [token, fetchWorkouts]
+  );
+
+  const onDelete = useCallback(
+    async (id: string) => {
+      try {
+        await axios.delete(`http://127.0.0.1:5000/api/workouts/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        fetchWorkouts();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [token, fetchWorkouts]
+  );
 
   return (
     <div className="h-full">
