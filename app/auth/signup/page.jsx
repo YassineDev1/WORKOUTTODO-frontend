@@ -4,6 +4,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa";
 
 const SignIn = () => {
   const [response, setResponse] = useState(null);
@@ -38,12 +39,23 @@ const SignIn = () => {
       <div className="hidden md:block">
         <img
           className="object-cover w-full h-full"
-          src="/images/background.jpg"
+          src="/images/bodyBuilding_bg.jpg"
           alt=""
         />
       </div>
 
-      <div className="flex flex-col justify-center px-4 bg-gray-100">
+      <div className="relative flex flex-col justify-center px-4 bg-gray-100">
+        <div className="relative flex items-center justify-between px-12 bottom-36 ">
+          <Link
+            className="flex items-center justify-center w-10 h-10 bg-red-500 rounded"
+            href="/"
+          >
+            <FaArrowLeft className="text-base font-normal text-gray-200" />
+          </Link>
+          <div className="flex flex-col text-2xl font-bold text-center ">
+            WORKOUT <span> TODO</span>
+          </div>
+        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="max-w-[450px] w-full mx-auto bg-white px-10 py-6"
