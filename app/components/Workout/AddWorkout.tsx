@@ -23,7 +23,7 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
       onSubmit={handleSubmit(handleAddWorkout)}
       className="self-center w-full max-w-xl p-4 mx-auto bg-white shadow-md md:self-start"
     >
-      <h2 className="mb-4 text-xl font-semibold">Add Workout</h2>
+      <h2 className="mb-4 text-xl font-semibold text-center">Add Workout</h2>
       <div className="mb-4">
         <label className="block mb-2" htmlFor="title">
           Title
@@ -33,10 +33,16 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
           placeholder="Title"
           type="text"
           className="w-full p-2 border"
-          {...register("title", { required: true })}
+          {...register("title", {
+            required: true,
+            pattern: {
+              value: /^[A-Za-z]+$/,
+              message: "Title must contain only characters",
+            },
+          })}
         />
         {errors.title && (
-          <span className="text-red-500">This field is required</span>
+          <span className="text-red-500">{errors?.title?.message}</span>
         )}
       </div>
       <div className="mb-4">
