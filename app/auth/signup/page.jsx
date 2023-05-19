@@ -39,7 +39,7 @@ const SignIn = () => {
       <div className="hidden md:block">
         <img
           className="object-cover w-full h-full"
-          src="/images/bodyBuilding_bg.jpg"
+          src="/images/bg-1.jpg"
           alt=""
         />
       </div>
