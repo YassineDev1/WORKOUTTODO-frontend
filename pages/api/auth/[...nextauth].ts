@@ -6,7 +6,6 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
-
       credentials: {
         email: {
           label: "email",
@@ -18,7 +17,6 @@ export default NextAuth({
         },
       },
       async authorize(credentials, req) {
-        //
         try {
           const res = await axios.post(
             "http://127.0.0.1:5000/api/users/login",
@@ -27,9 +25,10 @@ export default NextAuth({
               password: credentials?.password,
             }
           );
-          const user =  res?.data;
-
+          const user = res?.data;
           if (user) {
+            user.accessToken = user.accessToken || null;
+            user.refreshToken = user.refreshToken || null;
             return user;
           } else {
             return null;
@@ -48,6 +47,20 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
+      const isAccessTokenExpired = token && Date.now() > token.exp * 1000;
+      if (isAccessTokenExpired && user?.refreshToken) {
+        try {
+          const res = await axios.post(
+            "http://127.0.0.1:5000/api/users/refresh-token",
+            {
+              refreshToken: user.refreshToken,
+            }
+          );
+          token.accessToken = res?.data.accessToken;
+        } catch (err) {
+          console.log(err);
+        }
+      }
       return { ...token, ...user };
     },
     async session({ session, token, user }) {
