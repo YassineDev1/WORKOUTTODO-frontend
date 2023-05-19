@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import EditWorkout from "@/app/components/Workout/EditWorkout";
+import WorkoutDetails from "@/app/components/Workout/WorkoutDetails";
 
 const Edit = () => {
   const { _id }: any = useParams();
@@ -67,9 +68,11 @@ const Edit = () => {
 
   return (
     <>
-    
       {workout && (
+        <>
+          <WorkoutDetails workout={workout} />
         <EditWorkout workout={workout} handleEditWorkout={handleEdit} />
+        </>
       )}
     </>
   );
