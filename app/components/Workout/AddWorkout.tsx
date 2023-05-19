@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { WorkoutType } from "@/app/types/Workout";
+import { useForm } from "react-hook-form";
 
 interface AddWorkoutProps {
   handleAddedWorkout: (workout: WorkoutType) => Promise<void>;
@@ -11,6 +12,12 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
   const [title, setTitle] = useState("");
   const [reps, setReps] = useState(0);
   const [load, setLoad] = useState(0);
+
+   const {
+     register,
+     handleSubmit,
+     formState: { errors },
+   } = useForm()
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -24,13 +31,12 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
     setLoad(Number(event.target.value));
   };
 
-  const handleAddWorkout = async () => {
-    const newWorkout: WorkoutType = { title, reps, load };
-    await handleAddedWorkout(newWorkout);
+  const handleAddWorkout = async (formData: any) => {
+    await handleAddedWorkout(formData);
   };
 
   return (
-    <div className="max-w-xl md:self-start self-center p-4 mx-auto bg-white shadow-md w-[350px] md:w-[800px]">
+    <form onSubmit={handleSubmit(handleAddWorkout)} className="self-center w-full max-w-xl p-4 mx-auto bg-white shadow-md md:self-start">
       <h2 className="mb-4 text-xl font-semibold">Add Workout</h2>
       <div className="mb-4">
         <label className="block mb-2" htmlFor="title">
@@ -40,10 +46,12 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
           title="title"
           placeholder="Title"
           type="text"
-          name="title"
-          onChange={handleTitleChange}
           className="w-full p-2 border"
+          {...register("title", { required: true })}
         />
+        {errors.title && (
+          <span className="text-red-500">This field is required</span>
+        )}
       </div>
       <div className="mb-4">
         <label className="block mb-2" htmlFor="reps">
@@ -53,11 +61,13 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
           title="Reps"
           placeholder="Reps"
           type="number"
-          name="reps"
-          onChange={handleRepsChange}
+          {...register("reps", { required: true })}
           className="w-full p-2 border"
         />
       </div>
+      {errors.reps && (
+        <span className="text-red-500">This field is required</span>
+      )}
       <div className="mb-4">
         <label className="block mb-2" htmlFor="load">
           Load
@@ -66,17 +76,17 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
           title="Load"
           placeholder="Load"
           type="number"
-          onChange={handleLoadChange}
+          {...register("load", { required: true })}
           className="w-full p-2 border"
         />
+        {errors.load && (
+          <span className="text-red-500">This field is required</span>
+        )}
       </div>
-      <button
-        onClick={handleAddWorkout}
-        className="w-full py-2 mt-4 text-white bg-red-500 border hover:bg-red-400"
-      >
+      <button type="submit" className="w-full py-2 mt-4 text-white bg-red-500 border hover:bg-red-400">
         Add Workout
       </button>
-    </div>
+    </form>
   );
 };
 
