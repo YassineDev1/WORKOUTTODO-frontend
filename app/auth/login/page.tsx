@@ -18,7 +18,7 @@ const SignIn = () => {
     }else{
       return;
     }
-  }, [status]);
+  }, [status, router]);
 
   const onSubmit = useCallback(() => {
     if (email && password) {
@@ -41,7 +41,7 @@ const SignIn = () => {
     } else {
       setErrorMessage("Please enter your email and password.");
     }
-  }, [email, password]);
+  }, [email, password, router]);
   return (
     <div className="grid w-full h-screen grid-cols-1 sm:grid-cols-2">
       <div className="hidden sm:block">
