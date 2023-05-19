@@ -3,6 +3,7 @@ import { useCallback, useState, useEffect } from "react";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { FaArrowLeft} from "react-icons/fa"
 
 const SignIn = () => {
   const [email, setEmail] = useState<String | null>(null);
@@ -52,7 +53,15 @@ const SignIn = () => {
           alt=""
         />
       </div>
-      <div className="flex flex-col justify-center px-6 bg-gray-100 md:px-2 ">
+      <div className="relative flex flex-col justify-center px-6 bg-gray-100 md:px-2">
+        <div className="relative flex items-center justify-between px-12 bottom-44 ">
+          <Link className="flex items-center justify-center w-10 h-10 bg-red-500 rounded" href="/">
+            <FaArrowLeft className="text-base font-normal text-gray-200" />
+          </Link>
+          <div className="flex flex-col text-2xl font-bold text-center ">
+            WORKOUT <span> TODO</span>
+          </div>
+        </div>
         <div className="max-w-[400px] w-full mx-auto bg-white p-8 md:p-4">
           <h2 className="py-6 text-4xl font-bold text-center">
             <span className="text-red-700">WORK</span>
