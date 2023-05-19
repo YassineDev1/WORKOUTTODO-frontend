@@ -29,6 +29,7 @@ export default NextAuth({
           if (user) {
             user.accessToken = user.accessToken || null;
             user.refreshToken = user.refreshToken || null;
+            user.tokenExpiresIn = res?.data.tokenExpiresIn || null;
             return user;
           } else {
             return null;
@@ -44,10 +45,12 @@ export default NextAuth({
   },
   session: {
     strategy: "jwt",
+    jwt: true,
   },
   callbacks: {
     async jwt({ token, user }) {
       const isAccessTokenExpired = token && Date.now() > token.exp * 1000;
+
       if (isAccessTokenExpired && user?.refreshToken) {
         try {
           const res = await axios.post(
@@ -57,14 +60,17 @@ export default NextAuth({
             }
           );
           token.accessToken = res?.data.accessToken;
+          token.exp = res?.data.tokenExpiresIn; // Update the token expiration time
         } catch (err) {
           console.log(err);
         }
       }
+
       return { ...token, ...user };
     },
     async session({ session, token, user }) {
       session.user = token;
+      session.expires = token.expires;
       return session;
     },
   },

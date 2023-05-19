@@ -1,8 +1,8 @@
 "use client";
 import { useCallback, useState, useEffect } from "react";
 import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { signIn, useSession, getSession } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FaArrowLeft} from "react-icons/fa"
 
 const SignIn = () => {
@@ -12,14 +12,18 @@ const SignIn = () => {
   const router = useRouter();
 
   const { status } = useSession();
+  const searchParams = useSearchParams()
 
-  useEffect(() => {
-    if(status === "authenticated"){
-      router.push('/dashboard')
-    }else{
-      return;
-    }
-  }, [status, router]);
+useEffect(() => {
+  console.log(searchParams?.get('message'))
+  
+  if (status === "authenticated" && router.pathname === "/auth/login") {
+    router.replace("/dashboard");
+  } else if (router.pathname !== "/auth/login") {
+    return;
+  }
+}, [status, router]);
+
 
   const onSubmit = useCallback(() => {
     if (email && password) {
@@ -35,6 +39,7 @@ const SignIn = () => {
         } else {
           console.log(error);
           if (error === "CredentialsSignin") {
+            router.push('/auth/login')
             setErrorMessage("Invalid Email or Password");
           }
         }
@@ -55,7 +60,10 @@ const SignIn = () => {
       </div>
       <div className="relative flex flex-col justify-center px-6 bg-gray-100 md:px-2">
         <div className="relative flex items-center justify-between px-12 bottom-44 ">
-          <Link className="flex items-center justify-center w-10 h-10 bg-red-500 rounded" href="/">
+          <Link
+            className="flex items-center justify-center w-10 h-10 bg-red-500 rounded"
+            href="/"
+          >
             <FaArrowLeft className="text-base font-normal text-gray-200" />
           </Link>
           <div className="flex flex-col text-2xl font-bold text-center ">
@@ -67,6 +75,9 @@ const SignIn = () => {
             <span className="text-red-700">WORK</span>
             <span>OUT</span>
           </h2>
+          {searchParams && (
+            <div className="text-center text-red-500">{searchParams?.get('message')}</div>
+          )}
           <div className="flex flex-col py-2">
             <label>Email</label>
             <input
