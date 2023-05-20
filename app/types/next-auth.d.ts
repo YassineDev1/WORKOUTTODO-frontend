@@ -1,4 +1,6 @@
 import NextAuth from "next-auth"
+import { JWT } from "next-auth/jwt"
+
 
 declare module "next-auth" {
   /**
@@ -8,6 +10,8 @@ declare module "next-auth" {
      user?:
     | {
         accessToken?: string | null | undefined;
+        refreshToke?: string | null | undefined;
+        tokenExpiresIn?: number | null | undefined;
         data?:
           | {
               email?: string | null | undefined;
@@ -20,5 +24,13 @@ declare module "next-auth" {
     | null
     | undefined;
     status: string
+  }
+}
+
+
+declare module "next-auth/jwt" {
+
+  interface JWT {
+    accessToken?: string
   }
 }
