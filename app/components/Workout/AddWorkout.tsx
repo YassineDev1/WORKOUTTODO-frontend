@@ -42,7 +42,7 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
           })}
         />
         {errors.title && (
-          <span className="text-red-500">{errors?.title?.message}</span>
+          <span className="text-red-500">{errors.title.message}</span>
         )}
       </div>
       <div className="mb-4">
