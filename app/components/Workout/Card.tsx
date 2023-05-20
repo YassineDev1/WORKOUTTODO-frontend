@@ -1,6 +1,7 @@
 "use client";
 import { Workout } from "@/app/types/Workout";
-import { FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import Link from "next/link";
 
 interface CardProps {
   data: Workout;
@@ -28,14 +29,20 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
           </p>
         </div>
       </div>
-      <div>
+      <div className="flex flex-col items-center justify-between">
         <button
           title="delete"
           onClick={handleDelete}
-          className="p-2 mt-2 text-white bg-red-500 rounded-md hover:bg-red-400"
+          className="p-2 mt-2 text-center text-white bg-red-500 rounded-md hover:bg-red-400"
         >
           <FaTrash />
         </button>
+        <Link
+          className="p-2 mt-2 text-center text-white bg-red-500 rounded-md hover:bg-red-400"
+          href={`/dashboard/${data._id}/edit`}
+        >
+          <FaEdit />
+        </Link>
       </div>
     </div>
   );
