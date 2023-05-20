@@ -1,9 +1,9 @@
 "use client";
 import { useCallback, useState, useEffect } from "react";
 import Link from "next/link";
-import { signIn, useSession, getSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { FaArrowLeft} from "react-icons/fa"
+import { FaArrowLeft } from "react-icons/fa";
 
 const SignIn = () => {
   const [email, setEmail] = useState<String | null>(null);
@@ -12,43 +12,40 @@ const SignIn = () => {
   const router = useRouter();
 
   const { status } = useSession();
-  const searchParams = useSearchParams()
-  const pathName = usePathname()
+  const searchParams = useSearchParams();
+  const pathName = usePathname();
 
-useEffect(() => {  
-  if (status === "authenticated" && pathName === "/auth/login") {
-    console.log(status);
-    
-    router.push("/dashboard");
-  } else if (pathName !== "/auth/login") {
-    return;
-  }
-}, [status, router]);
+  useEffect(() => {
+    if (status === "authenticated" && pathName === "/auth/login") {
+      router.push("/dashboard");
+    } else if (pathName !== "/auth/login") {
+      return;
+    }
+  }, [status, router]);
 
-
-const onSubmit = useCallback(async () => {
-  if (email && password) {
-    setErrorMessage(null);
+  const onSubmit = useCallback(async () => {
+    if (email && password) {
+      setErrorMessage(null);
       signIn("credentials", {
         email: email,
         password: password,
         redirect: false,
         callbackUrl: "/dashboard",
-    });
+      });
 
-    if (result.ok) {
-      router.push("/dashboard");
-    } else {
-      console.log(result.error);
-      if (result.error === "CredentialsSignin") {
-        router.push("/auth/login");
-        setErrorMessage("Invalid Email or Password");
+      if (result.ok) {
+        router.push("/dashboard");
+      } else {
+        console.log(result.error);
+        if (result.error === "CredentialsSignin") {
+          router.push("/auth/login");
+          setErrorMessage("Invalid Email or Password");
+        }
       }
+    } else {
+      setErrorMessage("Please enter your email and password.");
     }
-  } else {
-    setErrorMessage("Please enter your email and password.");
-  }
-}, [email, password, router]);
+  }, [email, password, router]);
 
   return (
     <div className="grid w-full h-screen grid-cols-1 sm:grid-cols-2">
@@ -78,7 +75,9 @@ const onSubmit = useCallback(async () => {
             <span>OUT</span>
           </h2>
           {searchParams && (
-            <div className="text-center text-red-500">{searchParams?.get('message')}</div>
+            <div className="text-center text-red-500">
+              {searchParams?.get("message")}
+            </div>
           )}
           <div className="flex flex-col py-2">
             <label>Email</label>
