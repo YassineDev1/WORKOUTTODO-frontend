@@ -45,10 +45,9 @@ export default NextAuth({
   },
   session: {
     strategy: "jwt",
-    jwt: true,
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: any) {
       const isAccessTokenExpired = token && Date.now() > token.exp * 1000;
 
       if (isAccessTokenExpired && user?.refreshToken) {
@@ -68,9 +67,8 @@ export default NextAuth({
 
       return { ...token, ...user };
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.user = token;
-      session.expires = token.expires;
       return session;
     },
   },
