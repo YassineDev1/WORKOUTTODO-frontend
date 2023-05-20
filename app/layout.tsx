@@ -14,6 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+          <link rel="shortcut icon" href="/fave.png" type="image/x-icon" />
+      </head>
       <body className="min-h-screen">
         <Providers>{children}</Providers>
       </body>
