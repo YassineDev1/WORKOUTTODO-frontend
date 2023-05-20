@@ -33,7 +33,7 @@ const Edit: React.FC = () => {
         );
         const { workout } = response.data;
         setWorkout(workout);
-      } catch (error) {
+      } catch (error : any) {
         console.log(error?.response);
         if (error?.response?.status === 401) {
           await router.push("auth/login?message=Token Expired");
