@@ -33,12 +33,12 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
         <button
           title="delete"
           onClick={handleDelete}
-          className="p-2 mt-2 text-center text-white bg-red-500 rounded-md hover:bg-red-400"
+          className="p-2 text-center text-white bg-red-500 rounded-md hover:bg-red-400"
         >
           <FaTrash />
         </button>
         <Link
-          className="p-2 mt-2 text-center text-white bg-red-500 rounded-md hover:bg-red-400"
+          className="p-2 text-center text-white bg-red-500 rounded-md hover:bg-red-400"
           href={`/dashboard/${data._id}/edit`}
         >
           <FaEdit />

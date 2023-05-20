@@ -11,9 +11,7 @@ const Workouts: React.FC<WorkoutsProps> = ({ cards, onDelete }) => {
     <div className="flex flex-col items-center w-full max-h-full overflow-auto ">
       {cards &&
         cards.map((card, index) => (
-          <Link href={`/dashboard/${card._id}/edit`} className="w-full" key={index}>
-            <Card data={card} onDelete={onDelete} />
-          </Link>
+          <Card key={index} data={card} onDelete={onDelete} />
         ))}
     </div>
   );
