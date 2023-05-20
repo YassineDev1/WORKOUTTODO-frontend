@@ -1,5 +1,3 @@
-"use client";
-
 import { WorkoutType } from "@/app/types/Workout";
 import { useForm } from "react-hook-form";
 
@@ -42,7 +40,7 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
           })}
         />
         {errors.title && (
-          <span className="text-red-500">{errors.title.message}</span>
+          <span className="text-red-500">{String(errors.title.message)}</span>
         )}
       </div>
       <div className="mb-4">
@@ -56,10 +54,10 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
           {...register("reps", { required: true })}
           className="w-full p-2 border"
         />
+        {errors.reps && (
+          <span className="text-red-500">{String(errors.reps.message)}</span>
+        )}
       </div>
-      {errors.reps && (
-        <span className="text-red-500">This field is required</span>
-      )}
       <div className="mb-4">
         <label className="block mb-2" htmlFor="load">
           Load
@@ -72,7 +70,7 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
           className="w-full p-2 border"
         />
         {errors.load && (
-          <span className="text-red-500">This field is required</span>
+          <span className="text-red-500">{String(errors.load.message)}</span>
         )}
       </div>
       <button
