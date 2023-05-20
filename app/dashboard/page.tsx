@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Workout, WorkoutType } from "../types/Workout";
 import Workouts from "../components/Workout/Workouts";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [isRedirectedToLogin, setIsRedirectedToLogin] = useState(false);
 
   const router = useRouter();
+  const pathName = usePathname();
 
   const token = session?.user?.accessToken;
 
@@ -32,7 +33,7 @@ const fetchWorkouts = useCallback(async () => {
       } = response;
       setWorkouts(workouts);
       setIsFetched(true);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error?.response);
       if (error?.response?.status === 401 && !isRedirectedToLogin) {
         setIsRedirectedToLogin(true);
@@ -47,10 +48,10 @@ const fetchWorkouts = useCallback(async () => {
 
 
 useEffect(() => {
-  if (!isFetched && session && router.pathname !== "/auth/login") {
+  if (!isFetched && session && pathName !== "/auth/login") {
     fetchWorkouts();
   }
-}, [isFetched, fetchWorkouts, session, router]);
+}, [isFetched, fetchWorkouts, session, pathName]);
 
 
   const handleAddedWorkout = useCallback(
@@ -68,7 +69,7 @@ useEffect(() => {
 
         const {
           data: { workout: newWorkout },
-        } = addedWorkout;
+        }: any = addedWorkout;
 
         setWorkouts((prevWorkouts) => [newWorkout, ...prevWorkouts]);
         setIsFetched(false);
@@ -88,7 +89,7 @@ useEffect(() => {
           },
         });
         setIsFetched(false);
-      } catch (err) {
+      } catch (err: any) {
         console.log(err);
       }
     },
