@@ -46,7 +46,7 @@ const EditWorkout: React.FC<EditWorkoutProps> = ({ handleEditWorkout, workout })
           })}
         />
         {errors.title && (
-          <span className="text-red-500">{errors?.title?.message}</span>
+          <span className="text-red-500">{String(errors?.title?.message)}</span>
         )}
       </div>
       <div className="mb-4">
