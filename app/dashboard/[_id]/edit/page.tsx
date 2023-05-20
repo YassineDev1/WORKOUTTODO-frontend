@@ -7,6 +7,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import EditWorkout from "@/app/components/Workout/EditWorkout";
 import WorkoutDetails from "@/app/components/Workout/WorkoutDetails";
+import Link from "next/link";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Edit = () => {
   const { _id }: any = useParams();
@@ -67,14 +69,22 @@ const Edit = () => {
   };
 
   return (
-    <>
-      {workout && (
-        <>
-          <WorkoutDetails workout={workout} />
-        <EditWorkout workout={workout} handleEditWorkout={handleEdit} />
-        </>
-      )}
-    </>
+    <div className="flex flex-col w-full h-full">
+      <Link
+        className="flex items-center justify-center w-10 h-10 bg-red-500 rounded top-4"
+        href="/dashboard"
+      >
+        <FaArrowLeft className="text-base font-normal text-gray-200" />
+      </Link>
+      <div className="flex">
+        {workout && (
+          <>
+            <WorkoutDetails workout={workout} />
+            <EditWorkout workout={workout} handleEditWorkout={handleEdit} />
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 

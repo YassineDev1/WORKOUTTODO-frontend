@@ -1,7 +1,6 @@
 "use client";
 import axios from "axios";
 import AddWorkout from "../components/Workout/AddWorkout";
-import NavBar from "../components/Workout/NavBar";
 import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Workout, WorkoutType } from "../types/Workout";
@@ -96,9 +95,8 @@ useEffect(() => {
     [token]
   );
 
-  // Render different content based on session status
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <div className="text-center">Loading...</div>;
   }
 
   if (!session) {

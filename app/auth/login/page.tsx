@@ -14,11 +14,9 @@ const SignIn = () => {
   const { status } = useSession();
   const searchParams = useSearchParams()
 
-useEffect(() => {
-  console.log(searchParams?.get('message'))
-  
+useEffect(() => {  
   if (status === "authenticated" && router.pathname === "/auth/login") {
-    router.replace("/dashboard");
+    router.push("/dashboard");
   } else if (router.pathname !== "/auth/login") {
     return;
   }
