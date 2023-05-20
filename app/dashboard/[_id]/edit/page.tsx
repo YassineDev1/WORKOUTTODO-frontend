@@ -4,19 +4,20 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import EditWorkout from "@/app/components/Workout/EditWorkout";
 import WorkoutDetails from "@/app/components/Workout/WorkoutDetails";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
 
-const Edit = () => {
+
+
+const Edit: React.FC = () => {
   const { _id }: any = useParams();
   const [workout, setWorkout] = useState<Workout>();
 
   const router = useRouter();
-  const { data: session }: { data: Session | null | undefined } = useSession();
+  const { data: session } = useSession();
   const token = session?.user?.accessToken;
 
   const fetchWorkout = useCallback(async () => {
@@ -59,10 +60,9 @@ const Edit = () => {
             },
           }
         );
-        if(res?.status === 200){
-            router.push('/dashboard')
+        if (res?.status === 200) {
+          router.push("/dashboard");
         }
-        
       } catch (error) {
         console.error(error);
       }
