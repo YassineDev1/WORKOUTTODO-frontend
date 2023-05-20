@@ -2,7 +2,7 @@
 import { useCallback, useState, useEffect } from "react";
 import Link from "next/link";
 import { signIn, useSession, getSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { FaArrowLeft} from "react-icons/fa"
 
 const SignIn = () => {
@@ -13,39 +13,43 @@ const SignIn = () => {
 
   const { status } = useSession();
   const searchParams = useSearchParams()
+  const pathName = usePathname()
 
 useEffect(() => {  
-  if (status === "authenticated" && router.pathname === "/auth/login") {
+  if (status === "authenticated" && pathName === "/auth/login") {
+    console.log(status);
+    
     router.push("/dashboard");
-  } else if (router.pathname !== "/auth/login") {
+  } else if (pathName !== "/auth/login") {
     return;
   }
 }, [status, router]);
 
 
-  const onSubmit = useCallback(() => {
-    if (email && password) {
-      setErrorMessage(null);
+const onSubmit = useCallback(async () => {
+  if (email && password) {
+    setErrorMessage(null);
       signIn("credentials", {
         email: email,
         password: password,
         redirect: false,
         callbackUrl: "/dashboard",
-      }).then(({ ok, error }) => {
-        if (ok) {
-          router.push("/dashboard");
-        } else {
-          console.log(error);
-          if (error === "CredentialsSignin") {
-            router.push('/auth/login')
-            setErrorMessage("Invalid Email or Password");
-          }
-        }
-      });
+    });
+
+    if (result.ok) {
+      router.push("/dashboard");
     } else {
-      setErrorMessage("Please enter your email and password.");
+      console.log(result.error);
+      if (result.error === "CredentialsSignin") {
+        router.push("/auth/login");
+        setErrorMessage("Invalid Email or Password");
+      }
     }
-  }, [email, password, router]);
+  } else {
+    setErrorMessage("Please enter your email and password.");
+  }
+}, [email, password, router]);
+
   return (
     <div className="grid w-full h-screen grid-cols-1 sm:grid-cols-2">
       <div className="hidden sm:block">
