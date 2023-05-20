@@ -1,7 +1,7 @@
 import "./globals.css";
 import Providers from "./Providers";
 
-export const metadata = {
+const metadata = {
   title: "WORKOUTTODO",
   description: "This a TODO Workout website",
 };
