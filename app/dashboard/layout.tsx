@@ -8,7 +8,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
 const {data: session} = useSession();
-const name: string = session?.user?.data?.name;
+const name: string = session?.user?.data?.name ?? "";
   return (
     <div className="w-full h-full">
       <NavBar name={name} />
