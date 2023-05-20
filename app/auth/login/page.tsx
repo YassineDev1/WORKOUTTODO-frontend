@@ -15,37 +15,20 @@ const SignIn = () => {
   const searchParams = useSearchParams();
   const pathName = usePathname();
 
-  useEffect(() => {
-    if (status === "authenticated" && pathName === "/auth/login") {
-      router.push("/dashboard");
-    } else if (pathName !== "/auth/login") {
-      return;
-    }
-  }, [status, router]);
+  
+
 
   const onSubmit = useCallback(async () => {
     if (email && password) {
       setErrorMessage(null);
-      signIn("credentials", {
+       await signIn("credentials", {
         email: email,
         password: password,
-        redirect: false,
+        redirect: true,
         callbackUrl: "/dashboard",
       });
-
-      if (result.ok) {
-        router.push("/dashboard");
-      } else {
-        console.log(result.error);
-        if (result.error === "CredentialsSignin") {
-          router.push("/auth/login");
-          setErrorMessage("Invalid Email or Password");
-        }
-      }
-    } else {
-      setErrorMessage("Please enter your email and password.");
     }
-  }, [email, password, router]);
+  }, [email, password]);
 
   return (
     <div className="grid w-full h-screen grid-cols-1 sm:grid-cols-2">
