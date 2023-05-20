@@ -1,19 +1,16 @@
 "use client";
 import { useCallback, useState, useEffect } from "react";
 import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { signIn } from "next-auth/react";
+import {  useSearchParams } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
 
 const SignIn = () => {
   const [email, setEmail] = useState<String | null>(null);
   const [password, setPassword] = useState<String | null>(null);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
-  const router = useRouter();
 
-  const { status } = useSession();
   const searchParams = useSearchParams();
-  const pathName = usePathname();
 
   
 

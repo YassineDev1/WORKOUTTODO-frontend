@@ -1,6 +1,5 @@
 import { Workout } from "@/app/types/Workout";
 import Card from "./Card";
-import Link from "next/link";
 interface WorkoutsProps {
   cards: Workout[];
   onDelete: (id: string) => void;
