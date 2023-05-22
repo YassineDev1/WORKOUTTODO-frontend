@@ -80,7 +80,11 @@ const SignIn = () => {
               className="p-2 border"
               type="text"
               placeholder="name"
-              {...register("name", { required: true, minLength: 6 })}
+              {...register("name", {
+                required: true,
+                minLength: 6,
+                pattern: /^[A-Za-z\s]+$/,
+              })}
             />
             {errors.name && (
               <span className="text-red-500">

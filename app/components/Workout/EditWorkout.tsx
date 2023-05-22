@@ -40,7 +40,7 @@ const EditWorkout: React.FC<EditWorkoutProps> = ({ handleEditWorkout, workout })
           {...register("title", {
             required: true,
             pattern: {
-              value: /^[A-Za-z]+$/,
+              value: /^[A-Za-z\s]+$/,
               message: "Title must contain only characters",
             },
           })}

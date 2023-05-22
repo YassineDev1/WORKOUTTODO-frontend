@@ -34,7 +34,7 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ handleAddedWorkout }) => {
           {...register("title", {
             required: true,
             pattern: {
-              value: /^[A-Za-z]+$/,
+              value: /^[A-Za-z\s]+$/,
               message: "Title must contain only characters",
             },
           })}
