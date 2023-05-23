@@ -24,7 +24,7 @@ const Edit: React.FC = () => {
     if (token && _id) {
       try {
         const response = await axios.get(
-          `${process.env.API_URI}/${_id}`,
+          `https://express-api-d4qn.onrender.com/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ const Edit: React.FC = () => {
     if (token && _id) {
       try {
         const res = await axios.put(
-          `${process.env.API_URI}/${_id}`,
+          `https://express-api-d4qn.onrender.com/${_id}`,
           workout,
           {
             headers: {

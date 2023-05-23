@@ -19,7 +19,7 @@ export default NextAuth({
       async authorize(credentials, req) {
         try {
           const res = await axios.post(
-            `${process.env.API_URI}/api/login`,
+            `https://express-api-d4qn.onrender.com/api/login`,
             {
               email: credentials?.email,
               password: credentials?.password,
@@ -53,7 +53,7 @@ export default NextAuth({
       if (isAccessTokenExpired && user?.refreshToken) {
         try {
           const res = await axios.post(
-            `${process.env.API_URI}/api/refresh-token`,
+            `https://express-api-d4qn.onrender.com/api/refresh-token`,
             {
               refreshToken: user.refreshToken,
             }

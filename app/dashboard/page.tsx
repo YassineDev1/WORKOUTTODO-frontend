@@ -23,11 +23,14 @@ const Dashboard = () => {
 const fetchWorkouts = useCallback(async () => {
   if (token) {
     try {
-      const response = await axios.get(`${process.env.API_URI}/api/workouts`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `https://express-api-d4qn.onrender.com/api/workouts`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const {
         data: { workouts },
       } = response;
@@ -58,7 +61,7 @@ useEffect(() => {
     async (workout: WorkoutType) => {
       try {
         const addedWorkout: Workout = await axios.post(
-          "http://127.0.0.1:5000/workouts",
+          "https://express-api-d4qn.onrender.com/workouts",
           workout,
           {
             headers: {
