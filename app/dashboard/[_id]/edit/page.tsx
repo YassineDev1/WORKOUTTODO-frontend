@@ -52,7 +52,7 @@ const Edit: React.FC = () => {
     if (token && _id) {
       try {
         const res = await axios.put(
-          `http://127.0.0.1:5000/api/workouts/${_id}`,
+          `${process.env.API_URI}/${_id}`,
           workout,
           {
             headers: {
