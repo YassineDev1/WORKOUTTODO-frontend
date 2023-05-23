@@ -19,7 +19,7 @@ export default NextAuth({
       async authorize(credentials, req) {
         try {
           const res = await axios.post(
-            `${process.env.API_URI}/api/users/login`,
+            `${process.env.API_URI}/api/login`,
             {
               email: credentials?.email,
               password: credentials?.password,
@@ -53,7 +53,7 @@ export default NextAuth({
       if (isAccessTokenExpired && user?.refreshToken) {
         try {
           const res = await axios.post(
-            `${process.env.API_URI}/api/users/refresh-token`,
+            `${process.env.API_URI}/api/refresh-token`,
             {
               refreshToken: user.refreshToken,
             }

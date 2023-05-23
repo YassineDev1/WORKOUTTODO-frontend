@@ -19,7 +19,7 @@ const SignIn = () => {
   const onSubmit = async (formData) => {
     try {
       const { data } = await axios.post(
-        `${process.env.API_URI}/api/users/signup`,
+        `${process.env.API_URI}/api/signup`,
         formData
       );
       if (data) {
