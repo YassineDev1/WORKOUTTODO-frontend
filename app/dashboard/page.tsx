@@ -23,7 +23,7 @@ const Dashboard = () => {
 const fetchWorkouts = useCallback(async () => {
   if (token) {
     try {
-      const response = await axios.get("http://127.0.0.1:5000/api/workouts", {
+      const response = await axios.get(`${process.env.API_URI}/api/workouts`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

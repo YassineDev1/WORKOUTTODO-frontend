@@ -24,7 +24,7 @@ const Edit: React.FC = () => {
     if (token && _id) {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:5000/api/workouts/${_id}`,
+          `${process.env.API_URI}/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

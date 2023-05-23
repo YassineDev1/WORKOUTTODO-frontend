@@ -19,7 +19,7 @@ const SignIn = () => {
   const onSubmit = async (formData) => {
     try {
       const { data } = await axios.post(
-        "http://127.0.0.1:5000/api/users/signup",
+        `${process.env.API_URI}/api/users/signup`,
         formData
       );
       if (data) {
