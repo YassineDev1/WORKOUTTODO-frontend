@@ -21,13 +21,14 @@ const Dashboard = () => {
 
 
 const fetchWorkouts = useCallback(async () => {
+  console.log(token)
   if (token) {
     try {
       const response = await axios.get(
         `https://express-api-d4qn.onrender.com/api/workouts`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            "x-auth-token": `${token}`,
           },
         }
       );
@@ -61,11 +62,11 @@ useEffect(() => {
     async (workout: WorkoutType) => {
       try {
         const addedWorkout: Workout = await axios.post(
-          "https://express-api-d4qn.onrender.com/workouts",
+          "https://express-api-d4qn.onrender.com/api/workouts",
           workout,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              "x-auth-token": `${token}`,
             },
           }
         );
@@ -88,7 +89,7 @@ useEffect(() => {
       try {
         await axios.delete(`http://127.0.0.1:5000/api/workouts/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            "x-auth-token": `${token}`,
           },
         });
         setIsFetched(false);

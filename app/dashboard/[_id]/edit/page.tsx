@@ -24,10 +24,10 @@ const Edit: React.FC = () => {
     if (token && _id) {
       try {
         const response = await axios.get(
-          `https://express-api-d4qn.onrender.com/${_id}`,
+          `https://express-api-d4qn.onrender.com/api/workouts/${_id}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              "x-auth-token": `${token}`,
             },
           }
         );
@@ -52,11 +52,11 @@ const Edit: React.FC = () => {
     if (token && _id) {
       try {
         const res = await axios.put(
-          `https://express-api-d4qn.onrender.com/${_id}`,
+          `https://express-api-d4qn.onrender.com/api/workouts/${_id}`,
           workout,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              "x-auth-token": `${token}`,
             },
           }
         );
