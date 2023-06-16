@@ -24,14 +24,11 @@ const fetchWorkouts = useCallback(async () => {
   console.log(token)
   if (token) {
     try {
-      const response = await axios.get(
-        `https://express-api-d4qn.onrender.com/api/workouts`,
-        {
-          headers: {
-            "x-auth-token": `${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${process.env.API_URI}/api/workouts`, {
+        headers: {
+          "x-auth-token": `${token}`,
+        },
+      });
       const {
         data: { workouts },
       } = response;

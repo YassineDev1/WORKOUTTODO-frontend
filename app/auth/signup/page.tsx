@@ -19,7 +19,7 @@ const SignIn = () => {
   const onSubmit = async (formData) => {
     try {
       const { data } = await axios.post(
-        `http://localhost:3001/api/signup`,
+        `${process.env.API_URI}/api/signup`,
         formData
       );
       if (data) {

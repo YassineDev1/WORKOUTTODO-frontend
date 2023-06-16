@@ -23,14 +23,11 @@ const Edit: React.FC = () => {
   const fetchWorkout = useCallback(async () => {
     if (token && _id) {
       try {
-        const response = await axios.get(
-          `https://express-api-d4qn.onrender.com/api/workouts/${_id}`,
-          {
-            headers: {
-              "x-auth-token": `${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${process.env.API_URI}/${_id}`, {
+          headers: {
+            "x-auth-token": `${token}`,
+          },
+        });
         const { workout } = response.data;
         setWorkout(workout);
       } catch (error : any) {
@@ -52,7 +49,7 @@ const Edit: React.FC = () => {
     if (token && _id) {
       try {
         const res = await axios.put(
-          `https://express-api-d4qn.onrender.com/api/workouts/${_id}`,
+          `${process.env.API_URI}/api/workouts/${_id}`,
           workout,
           {
             headers: {
