@@ -16,7 +16,7 @@ const SignIn = () => {
   } = useForm();
 
   const router = useRouter();
-  const onSubmit = async (formData) => {
+  const onSubmit = async (formData: any) => {
     try {
       const { data } = await axios.post(
         `${process.env.API_URI}/api/signup`,
